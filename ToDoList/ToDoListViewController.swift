@@ -11,8 +11,13 @@ import UIKit
 class ToDoListViewController: UITableViewController {
 
     var itemArray = ["item1","item2","item3","item4","item5"]
+    let defaults = UserDefaults()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let items = defaults.array(forKey: "ToDoList") as? [String] {
+            itemArray = items
+        }
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -45,6 +50,7 @@ class ToDoListViewController: UITableViewController {
 //            print("success")
 //            print(textField.text)
             self.itemArray.append(textField.text!)
+            self.defaults.set(self.itemArray, forKey: "ToDoList")
             self.tableView.reloadData()
         }
         alert.addTextField { (alertTextField) in
@@ -58,7 +64,5 @@ class ToDoListViewController: UITableViewController {
 //        super.didReceiveMemoryWarning()
 //        // Dispose of any resources that can be recreated.
 //    }
-
-
 }
 
